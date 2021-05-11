@@ -1,11 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
 import { CommonModule } from '@angular/common';
+import { CoalService } from './shared/services/mock/coal.service';
 
 @NgModule({
   declarations: [
@@ -17,8 +19,9 @@ import { CommonModule } from '@angular/common';
     RouterModule,
     AppRoutingModule,
     NgbModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [CoalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

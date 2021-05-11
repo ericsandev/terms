@@ -16,7 +16,7 @@ export class MockService {
         area: 'Servicio',
         idCategoria: 2,
         categoria: 'Primarias',
-        mostrarChekAviso: 0,
+        mostrarChekAviso: 1,
         textoAviso: `But I must explain to you how all this mistaken idea of
         denouncing pleasure and praising pain was born and I will give you a
         complete account of the system, and expound the actual teachings of the
@@ -30,7 +30,37 @@ export class MockService {
         exercise, except to obtain some advantage from it? But who has any right to find
         fault with a man who chooses to enjoy a pleasure that has no annoying consequences,
         or one who avoids a pain that produces no resultant pleasure?`,
-        minimoCaracteres: 200
+        minimoCaracteres: 200,
+        areas: [
+          {
+            area: 'Nuevos',
+            recibirAviso: 1,
+            campanias: [
+              {
+                idCampania: 1,
+                campania: 'Oferta comercial'
+              },
+              {
+                idCampania: 2,
+                campania: 'Lanzamientos y eventos'
+              },
+            ]
+          },
+          {
+            area: 'Seminuevos',
+            recibirAviso: 0,
+            campanias: [
+              {
+                idCampania: 3,
+                campania: 'Oferta comercial'
+              },
+              {
+                idCampania: 4,
+                campania: 'Lanzamientos y eventos'
+              },
+            ]
+          }
+        ]
       }
     ])
   }

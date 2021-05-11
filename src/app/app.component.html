@@ -1,4 +1,4 @@
-<div class="section container my-3">
+<div class="section container my-3" *ngIf="data">
   <div class="row row justify-content-md-center">
     <div class="col-md-7 p-4">
       <h2 class="text-center mb-5">{{data[0].campania}}</h2>
@@ -19,7 +19,7 @@
     <div class="col-md-7 text-center" *ngIf="data[0].mostrarChekAviso === 1">
       <div class="content bg-light mb-5">
         <label class="toggle" for="uniqueID">
-          <input type="checkbox" class="toggle__input" checked id="uniqueID" />
+          <input type="checkbox" (change)="cambioCheck($event)" class="toggle__input" [checked]="checked" id="uniqueID" />
           <span class="toggle-track">
             <span class="toggle-indicator">
               <!-- 	This check mark is optional	 -->
