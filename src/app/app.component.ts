@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
 
   filter: Observable<string>;
 
-  data: DataModel[];
+  data: any[];
 
   idSeekOp: string;
 
@@ -26,11 +26,15 @@ export class AppComponent implements OnInit {
 
   title = 'terms';
 
+
   constructor(
     private readonly mock: MockService,
     private route: ActivatedRoute,
     private readonly coalService: CoalService
   ) {
+    this.mock.getData().subscribe(data => {
+      this.data = data;
+    });
   }
 
   ngOnInit(): void {
@@ -43,29 +47,34 @@ export class AppComponent implements OnInit {
     });
   }
 
-  cambioCheck = ($event) => {
+  cambioCheck = ($event, i) => {
     this.checked = !this.checked;
+    // if (checked === true) {
+    //   this.data[0].areas[i].recibirAviso = 1;
+    // } else {
+    //   this.data[0].areas[i].recibirAviso = 0;
+    // }
     console.log(this.checked);
     this.guardarRecibirAviso();
   }
 
   getDatosCampania = () => {
-    this.coalService.getService('aviso/getCampania?&idCampania=' + this.idCampania).subscribe((res: any) => {
-      console.log(res.recordsets[0]);
-      const rs = res.recordsets[0];
-      if (rs[0]) {
-        this.data = rs;
-      }
-    });
+    // this.coalService.getService('aviso/getCampania?&idCampania=' + this.idCampania).subscribe((res: any) => {
+    //   console.log(res.recordsets[0]);
+    //   const rs = res.recordsets[0];
+    //   if (rs[0]) {
+    //     this.data = rs;
+    //   }
+    // });
   };
 
   guardarRecibirAviso = () => {
-    this.coalService.postService('aviso/postRecibirAviso', {
-      idSeekOp: this.idSeekOp,
-      idCategoria: this.data[0].idCategoria,
-      recibirAviso: this.checked
-    }).subscribe((res: any) => {
-      console.log(res.recordsets[0]);
-    });
+    // this.coalService.postService('aviso/postRecibirAviso', {
+    //   idSeekOp: this.idSeekOp,
+    //   idCategoria: this.data[0].idCategoria,
+    //   recibirAviso: this.checked
+    // }).subscribe((res: any) => {
+    //   console.log(res.recordsets[0]);
+    // });
   }
 }

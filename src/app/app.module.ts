@@ -8,10 +8,12 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
 import { CommonModule } from '@angular/common';
 import { CoalService } from './shared/services/mock/coal.service';
+import { PrivacyComponent } from './components/privacy/privacy.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PrivacyComponent
   ],
   imports: [
     BrowserModule,

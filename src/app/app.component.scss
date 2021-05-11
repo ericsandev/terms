@@ -89,6 +89,7 @@ background-color: #e5efe9;
 
 .content {
   padding:1rem;
+  border-radius: 4px;
 }
 
 .btn {
@@ -96,4 +97,11 @@ background-color: #e5efe9;
     outline: none;
     box-shadow: none;
   }
+}
+
+h2 {
+  font-size:24px;
+}
+h4 {
+  font-size:18px;
 }

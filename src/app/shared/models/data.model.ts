@@ -3,6 +3,7 @@ export interface DataModel {
   campania: string;
   idArea: number,
   area: string;
+  areas: string;
   idCategoria: number,
   categoria: string;
   mostrarChekAviso: number;

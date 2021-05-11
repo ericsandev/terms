@@ -7,7 +7,7 @@ import { DataModel } from '../../models/data.model';
 })
 export class MockService {
 
-  getData(): Observable<DataModel[]> {
+  getData(): Observable<any[]> {
     return of([
       {
         idCampania: 11,
@@ -52,11 +52,11 @@ export class MockService {
             campanias: [
               {
                 idCampania: 3,
-                campania: 'Oferta comercial'
+                campania: 'semi aviso 1'
               },
               {
                 idCampania: 4,
-                campania: 'Lanzamientos y eventos'
+                campania: 'semiaviso 2'
               },
             ]
           }
