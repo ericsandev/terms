@@ -20,7 +20,8 @@ export class AppComponent implements OnInit {
   idSeekOp: string;
 
   idCampania: string;
-  checked = true;
+  checked: number;
+  idArea: number;
 
   isCollapsed = true;
 
@@ -32,9 +33,9 @@ export class AppComponent implements OnInit {
     private route: ActivatedRoute,
     private readonly coalService: CoalService
   ) {
-    this.mock.getData().subscribe(data => {
-      this.data = data;
-    });
+    // this.mock.getData().subscribe(data => {
+    //   this.data = data;
+    // });
   }
 
   ngOnInit(): void {
@@ -48,33 +49,46 @@ export class AppComponent implements OnInit {
   }
 
   cambioCheck = ($event, i) => {
-    this.checked = !this.checked;
-    // if (checked === true) {
-    //   this.data[0].areas[i].recibirAviso = 1;
-    // } else {
-    //   this.data[0].areas[i].recibirAviso = 0;
-    // }
-    console.log(this.checked);
+    this.idArea = this.data[0].areas[i].idArea;
+    if (this.data[0].areas[i].recibirAviso === 1) {
+      this.data[0].areas[i].recibirAviso = 0;
+      this.checked = 0;
+    } else {
+      this.data[0].areas[i].recibirAviso = 1;
+      this.checked = 1;
+    }
     this.guardarRecibirAviso();
   }
 
   getDatosCampania = () => {
-    // this.coalService.getService('aviso/getCampania?&idCampania=' + this.idCampania).subscribe((res: any) => {
-    //   console.log(res.recordsets[0]);
-    //   const rs = res.recordsets[0];
-    //   if (rs[0]) {
-    //     this.data = rs;
-    //   }
-    // });
+    this.coalService.getService(`aviso/getCampania?idCampania=${this.idCampania}&idSeekOp=${this.idSeekOp}`).subscribe((res: any) => {
+      const rs = res.recordsets[0];
+      if (rs[0]) {
+        this.data = rs;
+        this.obtenerAreasCampania(res.recordsets[1]);
+      }
+    });
   };
 
+  obtenerAreasCampania = (data: any) => {
+    this.data[0].areas = Array.from(new Set(data.map(e => e.idArea)))
+    .map((idArea: number) => {
+      return {
+        idArea,
+        area: data.find(e => e.idArea === idArea).area,
+        campanias: data.filter(e => e.idArea === idArea),
+        recibirAviso: data.find(e => e.idArea === idArea).recibirAviso,
+      }
+    });
+  }
+
   guardarRecibirAviso = () => {
-    // this.coalService.postService('aviso/postRecibirAviso', {
-    //   idSeekOp: this.idSeekOp,
-    //   idCategoria: this.data[0].idCategoria,
-    //   recibirAviso: this.checked
-    // }).subscribe((res: any) => {
-    //   console.log(res.recordsets[0]);
-    // });
+    this.coalService.postService('aviso/postRecibirAviso', {
+      idSeekOp: this.idSeekOp,
+      idArea: this.idArea,
+      recibirAviso: this.checked
+    }).subscribe((res: any) => {
+      console.log(res.recordsets[0]);
+    });
   }
 }
