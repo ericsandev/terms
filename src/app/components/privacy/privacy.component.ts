@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-privacy',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./privacy.component.scss']
 })
 export class PrivacyComponent implements OnInit {
-
+  @Input('mostrarTodo') mostrarTodo: number;
   constructor() { }
 
   ngOnInit(): void {
