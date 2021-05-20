@@ -29,6 +29,8 @@ export class AppComponent implements OnInit {
   title = 'terms';
   aceptoAviso: number;
 
+  spinner: boolean;
+
 
   constructor(
     private readonly mock: MockService,
@@ -40,9 +42,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      if (params.idSeekOp && params.idCampania) {
+      if (params.idSeekOp) {
         this.idSeekOp = params.idSeekOp;
-        this.idCampania = params.idCampania;
         this.getDatosCampania();
         this.getDatosUsuario();
       }
@@ -63,21 +64,29 @@ export class AppComponent implements OnInit {
   }
 
   getDatosCampania = () => {
-    this.coalService.getService(`aviso/getCampania?idCampania=${this.idCampania}&idSeekOp=${this.idSeekOp}`).subscribe((res: any) => {
+    this.spinner = true;
+    this.coalService.getService(`aviso/getCampania?idSeekOp=${this.idSeekOp}`).subscribe((res: any) => {
       const rs = res.recordsets[0];
       if (rs[0]) {
+        this.spinner = false;
         this.data = rs;
         this.obtenerAreasCampania(res.recordsets[1]);
       }
+    }, (err) => {
+      this.spinner = false;
     });
   };
 
   getDatosUsuario = () => {
+    this.spinner = true;
     this.coalService.getService(`aviso/getUsuario?idSeekOp=${this.idSeekOp}`).subscribe((res: any) => {
       const rs = res.recordsets[0];
+      this.spinner = false;
       if (rs[0]) {
         this.aceptoAviso = rs[0].aceptoAviso;
       }
+    }, (err) => {
+      this.spinner = false;
     });
   };
 
@@ -88,20 +97,26 @@ export class AppComponent implements OnInit {
           idArea,
           area: data.find(e => e.idArea === idArea).area,
           campanias: data.filter(e => e.idArea === idArea),
-          recibirAviso: data.find(e => e.idArea === idArea).recibirAviso,
+          recibirAviso: data.find(e => e.idArea === idArea).recibirAviso
         }
       });
-    console.log(this.data[0].areas);
-
+      this.data[0].areas.map((area: any) => {
+        area.mostrarChekAviso = this.data.find((d: any) => d.idArea == area.idArea).mostrarChekAviso;
+        return area;
+      });
   }
 
   guardarRecibirAviso = () => {
+    this.spinner = true;
     this.coalService.postService('aviso/postRecibirAviso', {
       idSeekOp: this.idSeekOp,
       idCampania: this.idCampania,
       recibirAviso: this.checked
     }).subscribe((res: any) => {
       console.log(res.recordsets[0]);
+      this.spinner = false;
+    }, (err) => {
+      this.spinner = false;
     });
   }
 }
