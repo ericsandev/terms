@@ -10,11 +10,13 @@ import { CommonModule } from '@angular/common';
 import { CoalService } from './shared/services/mock/coal.service';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AvisosComponent } from './components/avisos/avisos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PrivacyComponent
+    PrivacyComponent,
+    AvisosComponent
   ],
   imports: [
     BrowserModule,
